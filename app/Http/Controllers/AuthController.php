@@ -47,7 +47,12 @@ class AuthController extends Controller
     public function register(Request $request) {
         $validator = Validator::make($request->all(), [
             'username' => 'required|string|between:2,100',
-            'password' => 'required|string|min:8'
+            'password' => 'required|string|min:8',
+            'email' => 'required',
+            'firstname' => 'required',
+            'lastname' => 'required',
+            'phone_number' => 'required',
+            'gender' => 'required'
         ]);
 
         if($validator->fails()){
@@ -130,9 +135,5 @@ class AuthController extends Controller
             'message' => 'User successfully changed password',
             'user' => $user,
         ], 201);
-    }
-
-    public function csrf() {
-        return ['dsadas' => 'dsadsa'];
     }
 }
