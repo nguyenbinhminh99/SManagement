@@ -39,3 +39,4 @@ Route::group([
         Route::delete('/user/{id}', 'delete')->middleware('isAdmin');
     });
 });
+Route::post('/csrf', [AuthController::class, 'csrf']);
