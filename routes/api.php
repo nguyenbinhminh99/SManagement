@@ -19,6 +19,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout']);
+Route::post('/register', [AuthController::class, 'register']);
+Route::get('/userProfile', [AuthController::class, 'userProfile']);
 
 Route::group([
   'middleware' => 'isUser'
@@ -39,4 +41,3 @@ Route::group([
         Route::delete('/user/{id}', 'delete')->middleware('isAdmin');
     });
 });
-Route::post('/csrf', [AuthController::class, 'csrf']);
