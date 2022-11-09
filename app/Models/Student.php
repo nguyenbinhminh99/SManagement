@@ -28,14 +28,13 @@ class Student extends Model
         'gender',
         'identification',
         'address',
-        'school_id',
         'created_at',
         'updated_at',
         'deleted_at',
     ];
 
     protected $hidden = [
-
+        'school_id',
     ];
 
     protected static $logAttributes = [

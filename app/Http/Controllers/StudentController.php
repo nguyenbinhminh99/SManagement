@@ -20,7 +20,7 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $students = Student::query()->orderByDesc('id')->paginate(10);
+        $students = Student::query()->with('school:id,name')->paginate(10);
         return Responder::success($students, 'Students successfully showed');
     }
 
