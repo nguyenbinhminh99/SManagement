@@ -17,6 +17,7 @@ class StudentFactory extends Factory
     public function definition()
     {
         $gender = array('male', 'female');
+        $school_id = array(1, 2, 3);
         $permitted_chars = '0123456789';
         for ($i =0; $i < 100; $i++){
             $rdIdentification = substr(str_shuffle($permitted_chars), 0, 12);
@@ -29,6 +30,7 @@ class StudentFactory extends Factory
             'gender' =>  $gender[array_rand($gender)],
             'identification' => $rdIdentification,
             'address' => fake() ->address(),
+            'school_id' => $school_id[array_rand($school_id)],
         ];
     }
 }

@@ -33,6 +33,10 @@ class Student extends Model
         'deleted_at',
     ];
 
+    protected $hidden = [
+        'school_id',
+    ];
+
     protected static $logAttributes = [
         'firstname',
         'lastname',
@@ -42,7 +46,6 @@ class Student extends Model
         'identification',
         'address'];
 
-    protected static $logName = 'CRUD Students';
 
     protected function serializeDate(DateTimeInterface $date)
     {
@@ -52,6 +55,11 @@ class Student extends Model
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults();
+    }
+
+    public function school()
+    {
+        return $this->belongsTo(School::class, 'school_id');
     }
 
 

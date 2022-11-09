@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreStudent;
+use App\Models\School;
 use App\Models\Student;
 use App\Supports\Responder;
 use Exception;
@@ -19,7 +20,10 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $student = Student::query()->orderByDesc('id')->paginate(10);
+        $students = Student::query()->orderByDesc('id')->paginate(10);
+        foreach ($students as $student) {
+            $student['school'] = School::query()->where('id', '=', $student->school_id)->first();
+        }
         return Responder::success($student, 'Students successfully showed');
     }
 

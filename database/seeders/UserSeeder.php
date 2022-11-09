@@ -24,7 +24,7 @@ class UserSeeder extends Seeder
             'firstname' => 'Minh',
             'lastname' => 'Nguyen',
             'phone_number' => '0834966966',
-            'gender' => 'male'
+            'gender' => 'male',
         ])->assignRole('admin');
 
         User::create([
@@ -34,7 +34,7 @@ class UserSeeder extends Seeder
             'firstname' => 'Minh',
             'lastname' => 'Nguyen',
             'phone_number' => '0834966966',
-            'gender' => 'male'
+            'gender' => 'male',
         ])->assignRole('user');
 
 

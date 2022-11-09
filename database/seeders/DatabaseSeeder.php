@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // \App\Models\User::factory(10)->create();
-        \App\Models\Student::factory(100)->create();
+
 //        DB::table('users')->insert(
 //            [
 //                'username' => 'minhnb',
@@ -30,8 +30,11 @@ class DatabaseSeeder extends Seeder
 //            ]
 //        );
         $this->call([
+            SchoolSeeder::class,
             RoleSeeder::class,
-            UserSeeder::class
+            UserSeeder::class,
+            StudentSeeder::class
         ]);
+        \App\Models\Student::factory(100)->create();
     }
 }
