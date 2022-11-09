@@ -21,10 +21,7 @@ class StudentController extends Controller
     public function index()
     {
         $students = Student::query()->orderByDesc('id')->paginate(10);
-        foreach ($students as $student) {
-            $student['school'] = School::query()->where('id', '=', $student->school_id)->first();
-        }
-        return Responder::success($student, 'Students successfully showed');
+        return Responder::success($students, 'Students successfully showed');
     }
 
     /**
