@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+ use App\Enums\UserStatus;
  use DateTimeInterface;
  use Illuminate\Contracts\Auth\MustVerifyEmail;
  use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -13,7 +14,7 @@ namespace App\Models;
  use Tymon\JWTAuth\Contracts\JWTSubject;
  use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable implements JWTSubject
+class User extends Authenticatable implements JWTSubject, MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable, HasRoles, LogsActivity;
 
@@ -42,7 +43,10 @@ class User extends Authenticatable implements JWTSubject
     protected $hidden = [
         'password',
         'remember_token',
-        'roles'
+    ];
+
+    protected $casts = [
+        'status' => UserStatus::class
     ];
 
     public function setPasswordAttribute($value)
