@@ -20,7 +20,7 @@ class UserController extends Controller
         $users = User::query()->orderByDesc('id')->paginate(10);
         return response()->json([
             'message' => 'Success',
-            'user' => $users
+            'users' => $users
         ], 201);
     }
 
