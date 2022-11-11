@@ -64,14 +64,11 @@ class StudentController extends Controller
         try {
             $student = Student::create($request->all());
         } catch (Exception $e) {
-            return response()->json([
-                'message' => 'Fail',
-                'students' => $student
-            ]);
+            return Responder::fail($student, $e->getMessage());
         }
         return response()->json([
             'message' => 'Success',
-            'students' => $student
+            'student' => $student
         ], 201);
     }
 
