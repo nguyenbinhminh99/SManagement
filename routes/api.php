@@ -39,5 +39,6 @@ Route::group([
         Route::post('/user', 'store');
         Route::put('/user/{id}', 'update');
         Route::delete('/user/{id}', 'delete')->middleware('isAdmin');
+        Route::patch('/user/{id}', 'updateStatus')->middleware('isAdmin');
     });
 });

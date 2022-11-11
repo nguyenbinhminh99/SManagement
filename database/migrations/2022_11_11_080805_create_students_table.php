@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('gender', 10);
             $table->string('identification', 50);
             $table->string('address', 100);
-            $table->foreignId('school_id')->constrained();
+            $table->foreignId('school_id')->nullable()->constrained();
             $table->timestamps();
             $table->softDeletes();
         });

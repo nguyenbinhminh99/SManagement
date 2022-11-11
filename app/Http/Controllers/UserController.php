@@ -109,4 +109,32 @@ class UserController extends Controller
         $deleteUser = User::where('id', $id)->delete();
         return Responder::success($deleteUser, 'User successfully deleted');
     }
+
+    public function updateStatus(Request $request, $id)
+    {
+        $user = '';
+        if (preg_match('/[^0-9]/', $id)) {
+            return Responder::fail($id, 'id is not number');
+        }
+        if (!User::query()->where('id', $id)->exists()) {
+            return Responder::fail($id, 'Not exist');
+        }
+        try {
+            $user = User::where('id', $id)
+                ->update([
+                    'status' => $request->status,
+                ]);
+            if($user['status'] == 1)
+            {
+                $user->assignRole('user');
+            }
+            if($user['status'] == 0)
+            {
+                $user->assignRole('guest');
+            }
+        } catch (Exception $e) {
+            return Responder::fail($user, $e->getMessage());
+        }
+        return Responder::success($user, 'User successfully updated status');
+    }
 }
