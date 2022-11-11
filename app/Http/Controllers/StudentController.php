@@ -21,7 +21,10 @@ class StudentController extends Controller
     public function index()
     {
         $students = Student::query()->with('school:id,name')->paginate(10);
-        return Responder::success($students, 'Students successfully showed');
+        return response()->json([
+            'message' => 'Students successfully showed',
+            'students' => $students
+        ], 201);
     }
 
     /**
@@ -58,9 +61,15 @@ class StudentController extends Controller
         try {
             $student = Student::create($request->all());
         } catch (Exception $e) {
-            return Responder::fail($student, $e->getMessage());
+            return response()->json([
+                'message' => 'Fail',
+                'students' => $student
+            ]);
         }
-        return Responder::success($student, 'Student successfully stored');
+        return response()->json([
+            'message' => 'Success',
+            'students' => $student
+        ], 201);
     }
 
     /**
