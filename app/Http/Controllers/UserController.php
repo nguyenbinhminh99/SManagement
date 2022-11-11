@@ -17,8 +17,11 @@ class UserController extends Controller
      */
     public function index()
     {
-        $user = User::query()->orderByDesc('id')->paginate(10);
-        return Responder::success($user, 'Users successfully showed');
+        $users = User::query()->orderByDesc('id')->paginate(10);
+        return response()->json([
+            'message' => 'Success',
+            'user' => $users
+        ], 201);
     }
 
     /**
@@ -39,7 +42,10 @@ class UserController extends Controller
         $user = User::query()
             ->where('id', $id)
             ->first();
-        return Responder::success($user, 'User successfully showed');
+        return response()->json([
+            'message' => 'Success',
+            'user' => $user
+        ], 201);
     }
 
     /**
@@ -57,7 +63,10 @@ class UserController extends Controller
         } catch (Exception $e) {
             return Responder::fail($user, $e->getMessage());
         }
-        return Responder::success($user, 'User successfully stored');
+        return response()->json([
+            'message' => 'Success',
+            'user' => $user
+        ], 201);
     }
 
     /**
@@ -89,7 +98,10 @@ class UserController extends Controller
         } catch (Exception $e) {
             return Responder::fail($user, $e->getMessage());
         }
-        return Responder::success($user, 'User successfully updated');
+        return response()->json([
+            'message' => 'Success',
+            'user' => $user
+        ], 201);
     }
 
     /**
@@ -107,7 +119,10 @@ class UserController extends Controller
             return Responder::fail($id, 'Not exist');
         }
         $deleteUser = User::where('id', $id)->delete();
-        return Responder::success($deleteUser, 'User successfully deleted');
+        return response()->json([
+            'message' => 'Success',
+            'user' => $deleteUser
+        ], 201);
     }
 
     public function updateStatus(Request $request, $id)
@@ -135,6 +150,9 @@ class UserController extends Controller
         } catch (Exception $e) {
             return Responder::fail($user, $e->getMessage());
         }
-        return Responder::success($user, 'User successfully updated status');
+        return response()->json([
+            'message' => 'Success',
+            'user' => $user
+        ], 201);
     }
 }

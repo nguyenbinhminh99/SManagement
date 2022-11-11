@@ -22,7 +22,7 @@ class StudentController extends Controller
     {
         $students = Student::query()->with('school:id,name')->paginate(10);
         return response()->json([
-            'message' => 'Students successfully showed',
+            'message' => 'Success',
             'students' => $students
         ], 201);
     }
@@ -45,7 +45,10 @@ class StudentController extends Controller
         $student = Student::query()
             ->where('id', $id)
             ->first();
-        return Responder::success($student, 'Student successfully showed');
+        return response()->json([
+            'message' => 'Success',
+            'student' => $student
+        ], 201);
     }
 
     /**
@@ -103,7 +106,10 @@ class StudentController extends Controller
         } catch (Exception $e) {
             return Responder::fail($student, $e->getMessage());
         }
-        return Responder::success($student, 'Student successfully updated');
+        return response()->json([
+            'message' => 'Success',
+            'student' => $student
+        ], 201);
     }
 
     /**
@@ -121,7 +127,10 @@ class StudentController extends Controller
             return Responder::fail($id, 'Not exist');
         }
         $deleteStudent = Student::where('id', $id)->delete();
-        return Responder::success($deleteStudent, 'Student successfully deleted');
+        return response()->json([
+            'message' => 'Success',
+            'student' => $deleteStudent
+        ], 201);
     }
 
     public function log()
