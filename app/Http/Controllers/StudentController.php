@@ -22,6 +22,7 @@ class StudentController extends Controller
     {
         $students = Student::query()->with('school:id,name')->paginate(10);
         return response()->json([
+            'status' => true,
             'message' => 'Success',
             'students' => $students
         ], 201);
@@ -37,15 +38,24 @@ class StudentController extends Controller
     public function show($id)
     {
         if (preg_match('/[^0-9]/', $id)) {
-            return Responder::fail($id, 'id must be number');
+            return response()->json([
+                'id' => $id,
+                'message' => 'ID must be number',
+                'status' => false
+            ]);
         }
         if (!Student::query()->where('id', $id)->exists()) {
-            return Responder::fail($id, 'Not exist');
+            return response()->json([
+                'id' => $id,
+                'message' => 'ID not exist',
+                'status' => false
+            ]);
         }
         $student = Student::query()
             ->where('id', $id)
             ->first();
         return response()->json([
+            'status' => true,
             'message' => 'Success',
             'student' => $student
         ], 201);
@@ -64,9 +74,14 @@ class StudentController extends Controller
         try {
             $student = Student::create($request->all());
         } catch (Exception $e) {
-            return Responder::fail($student, $e->getMessage());
+            return response()->json([
+                'error' => $e,
+                'message' => 'Failed',
+                'status' => false
+            ]);
         }
         return response()->json([
+            'status' => true,
             'message' => 'Success',
             'student' => $student
         ], 201);
@@ -84,10 +99,18 @@ class StudentController extends Controller
     {
         $student = '';
         if (preg_match('/[^0-9]/', $id)) {
-            return Responder::fail($id, 'id must be number');
+            return response()->json([
+                'id' => $id,
+                'message' => 'ID must be number',
+                'status' => false
+            ]);
         }
         if (!Student::query()->where('id', $id)->exists()) {
-            return Responder::fail($id, 'Not exist');
+            return response()->json([
+                'id' => $id,
+                'message' => 'ID not exist',
+                'status' => false
+            ]);
         }
         try {
             Student::where('id', $id)
@@ -101,9 +124,14 @@ class StudentController extends Controller
                     'address' => $request->address
                 ]);
         } catch (Exception $e) {
-            return Responder::fail($student, $e->getMessage());
+            return response()->json([
+                'error' => $e,
+                'message' => 'Failed',
+                'status' => false
+            ]);
         }
         return response()->json([
+            'status' => true,
             'message' => 'Success',
             'student' => $student
         ], 201);
@@ -118,13 +146,22 @@ class StudentController extends Controller
     public function delete($id)
     {
         if (preg_match('/[^0-9]/', $id)) {
-            return Responder::fail($id, 'id is not number');
+            return response()->json([
+                'id' => $id,
+                'message' => 'ID must be number',
+                'status' => false
+            ]);
         }
         if (!Student::query()->where('id', $id)->exists()) {
-            return Responder::fail($id, 'Not exist');
+            return response()->json([
+                'id' => $id,
+                'message' => 'ID not exist',
+                'status' => false
+            ]);
         }
         $deleteStudent = Student::where('id', $id)->delete();
         return response()->json([
+            'status' => true,
             'message' => 'Success',
             'student' => $deleteStudent
         ], 201);
