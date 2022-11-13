@@ -171,4 +171,15 @@ class StudentController extends Controller
     {
         return Activity::all()->last();
     }
+
+    public function search(Request $request)
+    {
+        $search = $request->query('search') ?? '';
+        $students = Student::query()->where('firstname', 'like', "%$search%")->orderByDesc('id')->get();
+        return response()->json([
+            'status' => true,
+            'message' => 'Success',
+            'students' => $students
+        ], 201);
+    }
 }
