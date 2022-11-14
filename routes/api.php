@@ -33,7 +33,6 @@ Route::group([
         Route::post('/student', 'store');
         Route::put('/student/{id}', 'update');
         Route::patch('/student/{id}', 'update');
-        Route::get('/search','search');
         Route::delete('/student/{id}', 'delete')->middleware('isAdmin');
     });
 
