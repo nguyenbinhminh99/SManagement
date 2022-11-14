@@ -18,10 +18,9 @@ class StudentController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function index(Request $request)
+    public function index()
     {
-        $search = $request->query('search') ?? '';
-        $students = Student::query()->where('firstname', '=', "%$search%")->with('school:id,name')->paginate(10);
+        $students = Student::query()->with('school:id,name')->paginate(10);
         return response()->json([
             'status' => true,
             'message' => 'Success',
@@ -171,5 +170,16 @@ class StudentController extends Controller
     public function log()
     {
         return Activity::all()->last();
+    }
+
+    public function search(Request $request)
+    {
+        $search = $request->query('search') ?? '';
+        $students = Student::query()->where('firstname', '=', "%$search%")->orderByDesc('id')->get();
+        return response()->json([
+            'status' => true,
+            'message' => 'Success',
+            'students' => $students
+        ], 201);
     }
 }
