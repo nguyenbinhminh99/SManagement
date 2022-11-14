@@ -29,7 +29,6 @@ Route::group([
 ], function () {
     Route::controller(StudentController::class)->group(function () {
         Route::get('/students', 'index');
-        Route::get('/search', 'search');
         Route::get('/student/{id}', 'show');
         Route::post('/student', 'store');
         Route::put('/student/{id}', 'update');
