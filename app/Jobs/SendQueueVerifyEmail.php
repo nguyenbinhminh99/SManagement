@@ -14,8 +14,8 @@ class SendQueueVerifyEmail implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    private $from = 'noreply.auction.ghtk@gmail.com';
-    private $fromName = 'Auction GHTK';
+    private $from = 'minhmocmeo0@gmail.com';
+    private $fromName = 'Onschool';
     private $subject = 'Verify Email';
     protected $data;
     /**
