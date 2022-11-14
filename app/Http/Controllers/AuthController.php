@@ -76,6 +76,7 @@ class AuthController extends Controller
         ]));
 
         return response()->json([
+            'status' => true,
             'message' => 'User successfully registered',
             'user' => $user
         ], 201);
@@ -85,7 +86,7 @@ class AuthController extends Controller
     {
         $token = $request->query('token');
         $verifyEmail = $this->verifyEmailAction->handle($token);
-        return $verifyEmail['isValid'] ? 'Verify success' : 'Verify fail'; // redirect to frontend
+        return $verifyEmail['isValid'] ? redirect('file:///D:/Pre%20School%20Template/smanagement/login.html') : 'Verify fail'; // redirect to frontend
     }
 
     private function genVerifyEmailToken(int $user_id)
