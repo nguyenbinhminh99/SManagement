@@ -5,6 +5,7 @@ use App\Http\Controllers\StudentController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,6 +22,7 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout']);
 Route::post('/register', [AuthController::class, 'register']);
 Route::get('/userProfile', [AuthController::class, 'userProfile']);
+Route::post('/verify-email', [AuthController::class, 'resendVerifyEmail']);
 
 Route::group([
   'middleware' => 'isUser'
@@ -30,6 +32,7 @@ Route::group([
         Route::get('/student/{id}', 'show');
         Route::post('/student', 'store');
         Route::put('/student/{id}', 'update');
+        Route::patch('/student/{id}', 'update');
         Route::get('/search','search');
         Route::delete('/student/{id}', 'delete')->middleware('isAdmin');
     });
