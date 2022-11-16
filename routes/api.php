@@ -17,31 +17,34 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
-Route::post('/login', [AuthController::class, 'login']);
-Route::post('/logout', [AuthController::class, 'logout']);
-Route::post('/register', [AuthController::class, 'register']);
-Route::get('/userProfile', [AuthController::class, 'userProfile']);
-Route::post('/verify-email', [AuthController::class, 'resendVerifyEmail']);
-
-Route::group([
-  'middleware' => 'isUser'
-], function () {
-    Route::controller(StudentController::class)->group(function () {
-        Route::get('/students', 'index');
-        Route::get('/student/{id}', 'show');
-        Route::post('/student', 'store');
-        Route::put('/student/{id}', 'update');
-        Route::patch('/student/{id}', 'update');
-        Route::delete('/student/{id}', 'delete')->middleware('isAdmin');
+Route::group(['middleware' => 'XssSanitizer'], function (){
+    Route::controller(AuthController::class)->group(function () {
+        Route::post('/login', 'login');
+        Route::post('/logout', 'logout');
+        Route::post('/register', 'register');
+        Route::get('/userProfile', 'userProfile');
+        Route::post('/verify-email', 'resendVerifyEmail');
     });
+    Route::group([
+        'middleware' => 'isUser'
+    ], function () {
+        Route::controller(StudentController::class)->group(function () {
+            Route::get('/students', 'index');
+            Route::get('/student/{id}', 'show');
+            Route::post('/student', 'store');
+            Route::put('/student/{id}', 'update');
+            Route::patch('/student/{id}', 'update');
+            Route::delete('/student/{id}', 'delete')->middleware('isAdmin');
+        });
 
-    Route::controller(UserController::class)->group(function () {
-        Route::get('/users', 'index');
-        Route::get('/user/{id}', 'show');
-        Route::post('/user', 'store');
-        Route::put('/user/{id}', 'update');
-        Route::delete('/user/{id}', 'delete')->middleware('isAdmin');
-        Route::patch('/user/{id}', 'updateStatus')->middleware('isAdmin');
+        Route::controller(UserController::class)->group(function () {
+            Route::get('/users', 'index');
+            Route::get('/user/{id}', 'show');
+            Route::post('/user', 'store');
+            Route::put('/user/{id}', 'update');
+            Route::delete('/user/{id}', 'delete')->middleware('isAdmin');
+            Route::patch('/user/{id}', 'updateStatus')->middleware('isAdmin');
+        });
     });
 });
+
