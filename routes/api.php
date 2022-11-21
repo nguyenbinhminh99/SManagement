@@ -34,7 +34,7 @@ Route::group(['middleware' => 'XssSanitizer'], function (){
             Route::post('/student', 'store');
             Route::put('/student/{id}', 'update');
             Route::patch('/student/{id}', 'update');
-            Route::delete('/student/{id}', 'delete')->name('deleteStudent');
+            Route::delete('/student/{id}', 'delete')->name('studentDelete');
         });
 
         Route::controller(UserController::class)->group(function () {
@@ -42,8 +42,8 @@ Route::group(['middleware' => 'XssSanitizer'], function (){
             Route::get('/user/{id}', 'show');
             Route::post('/user', 'store');
             Route::put('/user/{id}', 'update');
-            Route::delete('/user/{id}', 'delete')->name('deleteUser');
-            Route::patch('/user/{id}', 'updateStatus')->name('changeStatus');
+            Route::delete('/user/{id}', 'delete')->name('userDelete');
+            Route::patch('/user/{id}', 'updateStatus')->name('statusChange');
         });
     });
 });

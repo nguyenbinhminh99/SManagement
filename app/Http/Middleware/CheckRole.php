@@ -18,11 +18,18 @@ class CheckRole
     public function handle(Request $request, Closure $next)
     {
         $user = $request->user();
-        if($user !== null && $user->hasRole('admin'))
+        if($user == null || !($user->hasRole('admin') || $user->hasRole('user')))
+        {
+            return response()->json([
+                'status' => false,
+                'message' => 'Unauthorized',
+            ], Response::HTTP_UNAUTHORIZED);
+        }
+        if($user->hasRole('admin'))
         {
             return $next($request);
         }
-        if($user !== null && $user->hasRole('user'))
+        if($user->hasRole('user'))
         {
             $route = $request->route()->getName();
             if($route == 'userDelete')
@@ -46,10 +53,8 @@ class CheckRole
                     'message' => 'Unauthorized',
                 ], Response::HTTP_UNAUTHORIZED);
             }
+
         }
-        return response()->json([
-            'status' => false,
-            'message' => 'Unauthorized',
-        ], Response::HTTP_UNAUTHORIZED);
+        return $next($request);
     }
 }
